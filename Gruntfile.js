@@ -25,25 +25,17 @@ module.exports = function(grunt) {
 
     // Before generating any new files, remove any previously-created files.
     clean: {
-      tests: ['tmp'],
+      tests: ['tmp','dist'],
     },
 
     // Configuration to be run (and then tested).
     mcompile: {
-      default_options: {
+      testFiles: {
         options: {
+          templateRoot: 'test/',
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
+          'tmp/': ['test/testfiles/test.html'],
         },
       },
     },

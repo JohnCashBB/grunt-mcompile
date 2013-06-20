@@ -5,46 +5,102 @@
  * Copyright (c) 2013 John Cashmore
  * Licensed under the MIT license.
  */
-
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+	// Please see the Grunt documentation for more information regarding task
+	// creation: http://gruntjs.com/creating-tasks
 
-  grunt.registerMultiTask('mcompile', 'Your task description goes here.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+	grunt.registerMultiTask('mcompile', 'Your task description goes here.', function () {
+		// Merge task-specific and/or target-specific options with these defaults.
+		var options = this.options({
+			templateRoot: '',
+			dataRoot: ''
+		});
+		var cheerio = require('cheerio'),
+			mustache = require("mustache"),
+			error = false;
+		// Iterate over all specified file groups.
+		this.files.forEach(function (f) {
+			// Concat specified files.
+			f.src.forEach(function (filename) {
+				if (grunt.file.exists(filename)) {
+					if (!grunt.file.isDir(filename)) {
+						var source = grunt.file.read(filename, {
+							encoding: null
+						});
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+						var $ = cheerio.load(source);
 
-      // Handle options.
-      src += options.punctuation;
+						$('[data-mustacheTemplate]')
+							.each(function (i, item) {
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+								if (grunt.file.exists(options.templateRoot + $(this).attr('data-mustacheTemplate'))) {
+									if (!grunt.file.isDir(options.templateRoot + $(this).attr('data-mustacheTemplate'))) {
+										var template = cheerio.load(grunt.file.read(options.templateRoot + $(this).attr('data-mustacheTemplate'), {
+												encoding: null
+											}))
+											.html();
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+
+											var view = {};
+
+
+											if ($(this).attr('data-mustacheData') !== 'undefined') {
+												if (grunt.file.exists($(this).attr('data-mustacheData'))) {
+													if (!grunt.file.isDir($(this).attr('data-mustacheData'))) {
+
+														view = JSON.parse(
+															grunt.file.read($(this).attr('data-mustacheData'), {
+																encoding: null
+															}));
+
+													}
+												} else {
+													grunt.log.error('Data file "' + $(this).attr('data-mustacheData') + '" not found.');
+													error = true;
+													return false;
+
+												}
+											}
+										var data = mustache.render(template, view);
+
+
+										$(this)
+											.removeAttr('data-mustacheTemplate')
+											.removeAttr('data-mustacheData')
+											.replaceWith(data);
+
+
+										grunt.file.write(f.dest + '/' + filename, $.html());
+
+									}
+								} else {
+									grunt.log.error('Template file "' + options.templateRoot + $(this).attr('data-mustacheTemplate') + '" not found.');
+									error = true;
+									return false;
+
+								}
+							});
+
+
+					}
+				} else {
+					grunt.log.warn('Source file "' + filename + '" not found.');
+					error = true;
+					//warnings = true;
+					return false;
+				}
+			});
+			if(error) {
+				return false;
+			}
+		});
+		if(error) {
+			return false;
+		}
+
+	});
 
 };
