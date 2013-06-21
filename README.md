@@ -75,7 +75,7 @@ Usage
 
 To use the task simply add the data attributes in your source html as follows.
 
-```<div data-mustacheTemplate="_data/test.mustache" data-mustacheData="test/_data/test.json">No JS data</div>```
+```<div data-mustacheTemplate="_data/test.mustache" data-mustacheData="_data/test.json">No JS data</div>```
 
 The element will be replaced with the mustache template.
 
