@@ -1,89 +1,88 @@
-# grunt-mcompile
+grunt-mcompile
+==============
 
-> Plugin to compile mustache templates as static html
+>   Plugin to compile mustache templates as static html
 
-## Getting Started
-This plugin requires Grunt `~0.4.1`
+Getting Started This plugin requires Grunt `~0.4.1`
+---------------------------------------------------
 
-If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
+If you haven't used [Grunt](<http://gruntjs.com/>) before, be sure to check out
+the [Getting Started](<http://gruntjs.com/getting-started>) guide, as it
+explains how to create a [Gruntfile](<http://gruntjs.com/sample-gruntfile>) as
+well as install and use Grunt plugins. Once you're familiar with that process,
+you may install this plugin with this command:
 
-```shell
-npm install grunt-mcompile --save-dev
-```
+```shell npm install grunt-mcompile --save-dev ```
 
-Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
+Once the plugin has been installed, it may be enabled inside your Gruntfile with
+this line of JavaScript:
 
-```js
-grunt.loadNpmTasks('grunt-mcompile');
-```
+```js grunt.loadNpmTasks('grunt-mcompile'); ```
 
-## The "mcompile" task
+The "mcompile" task
+-------------------
 
-### Overview
-In your project's Gruntfile, add a section named `mcompile` to the data object passed into `grunt.initConfig()`.
+### Overview In your project's Gruntfile, add a section named `mcompile` to the data object passed into `grunt.initConfig()`.
 
-```js
-grunt.initConfig({
-  mcompile: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-})
-```
+```js grunt.initConfig({
+	mcompile: {
+		options: {   // Task-specific options go here. },
+		your_target: {   // Target-specific file lists and/or options go here. },
+	},
+}) ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.templateRoot Type: `String` Default value: `''`
 
-A string value that is used to do something with whatever.
+A string value that is used to do has the root location of your mustache
+template files.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.dataRoot Type: `String` Default value: `''`
 
-A string value that is used to do something else with whatever else.
+A string value that is used to do has the root location of your mustache
+data files.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
 
-```js
-grunt.initConfig({
-  mcompile: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+```js grunt.initConfig({
+	mcompile: {
+		options: {},
+		files: {
+			'dest/': [src/*.html'],
+		},
+	},
+}) ```
 
 #### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
-```js
-grunt.initConfig({
-  mcompile: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+```js grunt.initConfig({
+	mcompile: {
+		options: {
+			templateRoot: '_data/templates/',
+			dataRoot: '_data/json/',
+		},
+		files: {
+			'dest/' : ['src/*.html'],
+		},
+	},
+}) ```
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Usage
+-----
 
-## Release History
-_(Nothing yet)_
+To use the task simply add the data attributes in your source html as follows.
+
+```<div data-mustacheTemplate="_data/test.mustache" data-mustacheData="test/_data/test.json">No JS data</div>```
+
+### The element will be replaced with the mustache template.
+
+
+
+Contributing In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](<http://gruntjs.com/>).
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Release History _(Nothing yet)_
+-------------------------------
