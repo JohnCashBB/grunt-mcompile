@@ -1,7 +1,7 @@
 {
   "name": "grunt-mcompile",
   "description": "Plugin to compile mustache templates as static html",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/JohnCashBB/grunt-mcompile",
   "author": {
     "name": "John Cashmore",
