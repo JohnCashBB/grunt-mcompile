@@ -77,12 +77,11 @@ To use the task simply add the data attributes in your source html as follows.
 
 ```<div data-mustacheTemplate="_data/test.mustache" data-mustacheData="test/_data/test.json">No JS data</div>```
 
-### The element will be replaced with the mustache template.
+The element will be replaced with the mustache template.
 
 
 
 Contributing In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](<http://gruntjs.com/>).
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Release History _(Nothing yet)_
 -------------------------------
